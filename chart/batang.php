@@ -1,14 +1,15 @@
 <?php
-require 'conn.php';
-$nidnWali = $_GET['nidn'];
-$mhs = getMhs($nidnWali, 'id, nama');
-$mahasiswa = [];
+require '../fungsi.php';
+require ROOT_PATH . '/conn.php';
+$dosen = getAllData('dosen', 'id, nama, nidn');
+$dataChart = [];
 
-foreach ($mhs as $row) {
-    $mahasiswa[] =
+foreach ($dosen as $row) {
+    $dataChart[] =
         array(
-            "nama" => ucwords($row['nama']),
-            "jumlah" => 1
+            "namaDosen" => ucwords($row['nama']),
+            "jumlahSiswa" => count(getMhs($row['nidn'])),
+            "nidn" => $row['nidn']
         );
 }
 ?>
@@ -18,14 +19,14 @@ foreach ($mhs as $row) {
 <head>
     <title>Master - Detail | Studi kasus Dosen Wali</title>
     <!-- <link rel="stylesheet" href="style.css"> -->
-    <?php require 'header.php' ?>
+    <?php require ROOT_PATH . '/layout/header.php' ?>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body style="<?= $Theme_Body;
                 $Load_BG; ?>">
     <header>
-        <?php require 'navbar.php' ?>
+        <?php require ROOT_PATH . '/layout/navbar.php' ?>
     </header>
     <main class="py-5" style="<?= $Load_BG; ?>">
         <div class="container">
@@ -33,7 +34,6 @@ foreach ($mhs as $row) {
                 <div class="col">
                     <div class="card rounded shadow" style="<?= $Load_BG; ?>">
                         <div class="card-body">
-                            <h5><i class="fas fa-fw fa-paperclip"></i> Dosen Wali : <?= ucwords(getNamaDsn($nidnWali)); ?></h5>
                             <div class="border" style="min-height:80vh;">
                                 <div class="chartCard">
                                     <div class="chartBox col-md-10 mx-auto">
@@ -47,15 +47,15 @@ foreach ($mhs as $row) {
             </div>
         </div>
     </main>
-    <?php require 'footer.php' ?>
+    <?php require ROOT_PATH . '/layout/footer.php' ?>
     <script>
         // pass variable
         // var namaDosen = 
         // setup 
         const data = {
             datasets: [{
-                label: 'Jumlah Mahasiswa Bimbingan',
-                data: <?= json_encode($mahasiswa); ?>,
+                label: 'Mahasiswa Bimbingan',
+                data: <?= json_encode($dataChart); ?>,
                 backgroundColor: [
                     'rgba(255, 26, 104, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -84,8 +84,8 @@ foreach ($mhs as $row) {
             data,
             options: {
                 parsing: {
-                    xAxisKey: 'nama',
-                    yAxisKey: 'jumlah'
+                    xAxisKey: 'namaDosen',
+                    yAxisKey: 'jumlahSiswa'
                 },
                 scales: {
                     y: {
@@ -102,6 +102,20 @@ foreach ($mhs as $row) {
             ctx,
             config
         );
+
+        function clickHandler(click) {
+            const points = myChart.getElementsAtEventForMode(click, 'nearest', {
+                intersect: true
+            }, true);
+            if (points.length) {
+                const firstPoint = points[0];
+                const value = myChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+                console.log(value.nidn);
+                // membuka link
+                window.location.href = '<?= BASE_URL; ?>detail/detailBatang.php?nidn=' + value.nidn;
+            }
+        }
+        ctx.onclick = clickHandler;
     </script>
 </body>
 

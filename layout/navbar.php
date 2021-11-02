@@ -6,9 +6,9 @@
         </button>
         <div class="collapse navbar-collapse d-flex flex-row-reverse" id="buka_menu">
             <ul class="nav text-light">
-                <li class="nav-item"><a href="index.php" class="nav-link text-light"><i class="fas fa-fw fa-table"></i> Tabel</a></li>
-                <li class="nav-item"><a href="batang.php" class="nav-link text-light"><i class="fas fa-fw fa-chart-bar"></i> Grafik Batang</a></li>
-                <li class="nav-item"><a href="lingkaran.php" class="nav-link text-light"><i class="fas fa-fw fa-chart-pie"></i> Grafik Lingkaran</a></li>
+                <li class="nav-item"><a href="<?= BASE_URL; ?>" class="nav-link text-light"><i class="fas fa-fw fa-table"></i> Tabel</a></li>
+                <li class="nav-item"><a href="<?= BASE_URL; ?>chart/batang.php" class="nav-link text-light"><i class="fas fa-fw fa-chart-bar"></i> Grafik Batang</a></li>
+                <li class="nav-item"><a href="<?= BASE_URL; ?>chart/lingkaran.php" class="nav-link text-light"><i class="fas fa-fw fa-chart-pie"></i> Grafik Lingkaran</a></li>
             </ul>
         </div>
     </div>

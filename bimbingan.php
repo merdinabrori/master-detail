@@ -14,13 +14,13 @@ $mahasiswa = getMhs(false, $npm)[0];
 <head>
     <title>Master - Detail | Studi kasus Dosen Wali</title>
     <!-- <link rel="stylesheet" href="style.css">-->
-    <?php require 'header.php'; ?>
+    <?php require ROOT_PATH . '/layout/header.php'; ?>
 </head>
 
 <body style="<?= $Theme_Body;
                 $Load_BG; ?>">
     <header>
-        <?php require 'navbar.php' ?>
+        <?php require ROOT_PATH . '/layout/navbar.php' ?>
     </header>
     <main class="py-5" style="<?= $Load_BG; ?>">
         <div class="container">
@@ -42,7 +42,7 @@ $mahasiswa = getMhs(false, $npm)[0];
                                     foreach ($list_bimbingan as $row) : ?>
                                         <tr>
                                             <th><?= $i; ?></th>
-                                            <td><a class="text-decoration-none text-primary" href="detail-bimbingan.php?bimbingan=<?= $row['id']; ?>"><?= ucwords(getJenisBimbingan($row['id_bimbingan'])); ?></a></td>
+                                            <td><a class="text-decoration-none text-primary" href="detail/detail-bimbingan.php?bimbingan=<?= $row['id']; ?>"><?= ucwords(getJenisBimbingan($row['id_bimbingan'])); ?></a></td>
                                             <td><?= ucwords(Tanggal($row['waktu'])); ?></td>
                                         </tr>
                                     <?php $i += 1;
@@ -55,7 +55,7 @@ $mahasiswa = getMhs(false, $npm)[0];
             </div>
         </div>
     </main>
-    <?php require 'footer.php'; ?>
+    <?php require ROOT_PATH . '/layout/footer.php'; ?>
 </body>
 
 </html>

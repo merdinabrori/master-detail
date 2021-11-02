@@ -1,6 +1,6 @@
 <?php
-require 'conn.php';
-require 'fungsi.php';
+require '../fungsi.php';
+require ROOT_PATH . '/conn.php';
 $nidnWali = $_GET['nidn'];
 $mahasiswa = getMhs($nidnWali);
 
@@ -11,13 +11,13 @@ $mahasiswa = getMhs($nidnWali);
 <head>
     <title>Master - Detail | Studi kasus Dosen Wali</title>
     <!-- <link rel="stylesheet" href="style.css">-->
-    <?php require 'header.php'; ?>
+    <?php require ROOT_PATH . '/layout/header.php'; ?>
 </head>
 
 <body style="<?= $Theme_Body;
                 $Load_BG; ?>">
     <header>
-        <?php require 'navbar.php' ?>
+        <?php require ROOT_PATH . '/layout/navbar.php' ?>
     </header>
     <main class="py-5" style="<?= $Load_BG; ?>">
         <div class="container">
@@ -44,7 +44,7 @@ $mahasiswa = getMhs($nidnWali);
                                     foreach ($mahasiswa as $row) : ?>
                                         <tr>
                                             <th><?= $i; ?></th>
-                                            <td><a class="text-decoration-none text-primary" href="bimbingan.php?npm=<?= $row['npm']; ?>"><?= ucwords($row['nama']); ?></a></td>
+                                            <td><a class="text-decoration-none text-primary" href="<?= BASE_URL; ?>bimbingan.php?npm=<?= $row['npm']; ?>"><?= ucwords($row['nama']); ?></a></td>
                                             <td><?= ucwords($row['npm']); ?></td>
                                             <td><?= ucwords($row['tempat_lahir']); ?></td>
                                             <td><?= ucwords(Tanggal($row['tgl_lahir'])); ?></td>
@@ -64,7 +64,7 @@ $mahasiswa = getMhs($nidnWali);
             </div>
         </div>
     </main>
-    <?php require 'footer.php'; ?>
+    <?php require ROOT_PATH . '/layout/footer.php'; ?>
 </body>
 
 </html>

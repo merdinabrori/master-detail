@@ -1,6 +1,6 @@
 <?php
-require 'conn.php';
-require 'fungsi.php';
+require '../fungsi.php';
+require ROOT_PATH . '/conn.php';
 $detail_bimbingan = getBimbingan(false, false, $_GET['bimbingan'])[0];
 $mahasiswa = getMhs(false, $detail_bimbingan['npm_mhs'])[0];
 // var_dump($detail_bimbingan);
@@ -14,13 +14,13 @@ $mahasiswa = getMhs(false, $detail_bimbingan['npm_mhs'])[0];
 <head>
     <title>Master - Detail | Studi kasus Dosen Wali</title>
     <!-- <link rel="stylesheet" href="style.css">-->
-    <?php require 'header.php'; ?>
+    <?php require ROOT_PATH . '/layout/header.php'; ?>
 </head>
 
 <body style="<?= $Theme_Body;
                 $Load_BG; ?>">
     <header>
-        <?php require 'navbar.php' ?>
+        <?php require ROOT_PATH . '/layout/navbar.php' ?>
     </header>
     <main class="py-5" style="<?= $Load_BG; ?>">
         <div class="container">
@@ -43,7 +43,7 @@ $mahasiswa = getMhs(false, $detail_bimbingan['npm_mhs'])[0];
             </div>
         </div>
     </main>
-    <?php require 'footer.php'; ?>
+    <?php require ROOT_PATH . '/layout/footer.php'; ?>
 </body>
 
 </html>

@@ -3,6 +3,9 @@ require 'conn.php';
 require 'fungsi.php';
 $dosen = getAllData('dosen');
 
+// var_dump($_SERVER);
+// die;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,13 +13,13 @@ $dosen = getAllData('dosen');
 <head>
     <title>Master - Detail | Studi kasus Dosen Wali</title>
     <!-- <link rel="stylesheet" href="style.css"> -->
-    <?php require 'header.php'; ?>
+    <?php require ROOT_PATH . '/layout/header.php'; ?>
 </head>
 
 <body style="<?= $Theme_Body;
                 $Load_BG; ?>">
     <header>
-        <?php require 'navbar.php' ?>
+        <?php require ROOT_PATH . '/layout/navbar.php' ?>
     </header>
     <main class="py-5" style="<?= $Load_BG; ?>">
         <div class="container">
@@ -42,7 +45,7 @@ $dosen = getAllData('dosen');
                                     foreach ($dosen as $row) : ?>
                                         <tr>
                                             <td class="text-center "><?= $i; ?></td>
-                                            <td><a class="text-decoration-none text-primary" href="detail.php?nidn=<?= $row['nidn']; ?>"><?= ucwords($row['nama']); ?></a></td>
+                                            <td><a class="text-decoration-none text-primary" href="<?= BASE_URL; ?>detail/detail.php?nidn=<?= $row['nidn']; ?>"><?= ucwords($row['nama']); ?></a></td>
                                             <td><?= ucwords($row['nidn']); ?></td>
                                             <td><?= ucwords($row['tempat_lahir']); ?></td>
                                             <td><?= ucwords(tanggal($row['tgl_lahir'])); ?></td>
@@ -62,7 +65,7 @@ $dosen = getAllData('dosen');
             </div>
         </div>
     </main>
-    <?php require 'footer.php'; ?>
+    <?php require ROOT_PATH . '/layout/footer.php'; ?>
 </body>
 
 </html>

@@ -1,13 +1,18 @@
 <?php
-require 'conn.php';
-$nidnWali = $_GET['nidn'];
-$mhs = getMhs($nidnWali, 'id, nama');
-$mahasiswa = [];
-$isian = [];
+require '../fungsi.php';
+require ROOT_PATH . '/conn.php';
+$dosen = getAllData('dosen', 'id, nama, nidn');
+$namaDosen = [];
+$jumlahMhs = [];
+$nidn = [];
 
-foreach ($mhs as $row) {
-    $mahasiswa[] = $row['nama'];
-    $isian[] = 1;
+// var_dump(ROOT_PATH);
+// die;
+
+foreach ($dosen as $row) {
+    $jumlahMhs[] = count(getMhs($row['nidn']));
+    $namaDosen[] = $row['nama'];
+    $nidn[] = $row['nidn'];
 }
 ?>
 <!DOCTYPE html>
@@ -16,14 +21,14 @@ foreach ($mhs as $row) {
 <head>
     <title>Master - Detail | Studi kasus Dosen Wali</title>
     <!-- <link rel="stylesheet" href="style.css"> -->
-    <?php require 'header.php' ?>
+    <?php require ROOT_PATH . '/layout/header.php' ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body style="<?= $Theme_Body;
                 $Load_BG; ?>">
     <header>
-        <?php require 'navbar.php' ?>
+        <?php require ROOT_PATH . '/layout/navbar.php' ?>
     </header>
     <main class="py-5" style="<?= $Load_BG; ?>">
         <div class="container">
@@ -31,7 +36,6 @@ foreach ($mhs as $row) {
                 <div class="col">
                     <div class="card rounded shadow" style="<?= $Load_BG; ?>">
                         <div class="card-body">
-                            <h5><i class="fas fa-fw fa-paperclip"></i> Dosen Wali : <?= ucwords(getNamaDsn($nidnWali)); ?></h5>
                             <div class="border" style="min-height:80vh;">
                                 <div class="chartCard">
                                     <div class="chartBox col-md-10 mx-auto" style="max-width: 700px;">
@@ -45,15 +49,15 @@ foreach ($mhs as $row) {
             </div>
         </div>
     </main>
-    <?php require 'footer.php' ?>
+    <?php require ROOT_PATH . '/layout/footer.php' ?>
 </body>
 <script>
     // pie Chart
     const data = {
-        labels: <?= json_encode($mahasiswa); ?>,
+        labels: <?= json_encode($namaDosen); ?>,
         datasets: [{
             label: '# of Votes',
-            data: <?= json_encode($isian); ?>,
+            data: <?= json_encode($jumlahMhs); ?>,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -87,13 +91,30 @@ foreach ($mhs as $row) {
         }
     };
 
-    //pin pointing chart
+    //membuat chart
     const ctxPie = document.getElementById('pieChart');
     // render init block
     const pieChart = new Chart(
         ctxPie,
         configPie
     );
+
+    function clickHandler(click) {
+        const points = pieChart.getElementsAtEventForMode(click, 'nearest', {
+            intersect: true
+        }, true);
+
+        // key untuk dikirim pada link secara GET
+        const nidn = <?= json_encode($nidn); ?>;
+        if (points.length) {
+            const firstPoint = points[0];
+            console.log(firstPoint.index);
+
+            // membuka link
+            window.location.href = '<?= BASE_URL; ?>detail/detailLingkaran.php?nidn=' + nidn[firstPoint.index];
+        }
+    }
+    ctxPie.onclick = clickHandler;
 </script>
 
 </html>

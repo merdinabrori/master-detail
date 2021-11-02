@@ -14,6 +14,6 @@
 <script>
 
 </script>
-<script src="vendor\twbs\bootstrap5\js\bootstrap.bundle.min.js"></script>
-<script src="vendor\twbs\bootstrap5\js\bootstrap.min.js"></script>
+<script src="<?= ROOT_PATH; ?>\vendor\twbs\bootstrap5\js\bootstrap.bundle.min.js"></script>
+<script src="<?= ROOT_PATH; ?>\vendor\twbs\bootstrap5\js\bootstrap.min.js"></script>
 <!-- <script src="vendor\twbs\bootstrap\dist\js\bootstrap.min.js"></script> -->
